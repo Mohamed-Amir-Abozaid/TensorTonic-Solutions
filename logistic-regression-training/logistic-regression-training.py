@@ -10,20 +10,17 @@ def train_logistic_regression(X, y, lr=0.1, steps=1000):
     Return (w, b).
     """
     # Write code here
-    samples, features = X.shape
-    w = np.zeros(features) #(f,)
+    samples,features = X.shape
+    w = np.zeros(features)
     b = 0
-    # (s,f)*(f,) -> (s,)
     for _ in range(steps):
-        z = X @ w + b
-        y_p = _sigmoid(z) #-> (s,)
-        #binary cross entropy 
-        # y -> (samples,)
-        dw = (1/samples)* X.T @ (y_p - y)
-        db = (1/samples)* np.sum(y_p - y)
+        z = X @ w + b 
+        a = _sigmoid(z)
+        error = a - y
+        dw = (1/samples) * (X.T @ error)
+        db = (1/samples) * np.sum(error)
+        w = w - lr * dw
+        b = b - lr * db
 
-        w = w - lr*dw
-        b = b - lr*db
-
-    return w,b
+    return (w,b)
     pass
