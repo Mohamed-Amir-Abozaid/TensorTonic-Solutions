@@ -5,11 +5,14 @@ def cross_entropy_loss(y_true, y_pred):
     Compute average cross-entropy loss for multi-class classification.
     """
     # Write code here
-    y_pred = np.array(y_pred)
     y_true = np.array(y_true)
-    n_samples = len(y_true)
-    cr_prob = y_pred[np.arange(n_samples) , y_true]
-    loss = -np.mean(np.log(cr_prob))
-    return loss
-    
+    y_pred = np.array(y_pred)
+    samples = y_true.shape[0]
+    loss = 0
+    for i in range(samples):
+        t = y_true[i]
+        p = y_pred[i][t]
+        loss -= np.log(p)
+
+    return loss/samples
     pass
